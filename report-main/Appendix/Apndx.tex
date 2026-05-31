@@ -1,0 +1,187 @@
+\chapter{Code}
+
+\section{Frontend Component Example}
+
+The following dummy code snippet demonstrates a reusable React component developed using TypeScript for displaying card details within the CBCC-PWA platform.
+
+\begin{tcblisting}{listing only,
+    colback=gray!10!white, 
+    breakable, 
+    boxsep=0pt,
+    top=1mm,
+    bottom=1mm,
+    left=1mm,
+    right=1mm,
+    listing options={
+        language=JavaScript,
+        basicstyle=\small\ttfamily,
+        keywordstyle=\color{blue},
+        commentstyle=\color{gray},
+        backgroundcolor=\color{gray!25},
+        showstringspaces=false,
+        breaklines=true
+    }
+}
+import React from "react";
+
+type CardProps = {
+    cardName: string;
+    cardNumber: string;
+    status: string;
+};
+
+const CardDetails: React.FC<CardProps> = ({
+    cardName,
+    cardNumber,
+    status
+}) => {
+    return (
+        <div className="card-container">
+            <h3>{cardName}</h3>
+            <p>Card Number: {cardNumber}</p>
+            <span>Status: {status}</span>
+        </div>
+    );
+};
+
+export default CardDetails;
+\end{tcblisting}
+
+% ----------------------------
+% Figure inserted here
+% ----------------------------
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Appendix/image.jpeg}
+    \caption{Illustration of the Frontend Component Layout}
+    \label{fig:frontend-component}
+\end{figure}
+
+\section{Redux API Integration Example}
+
+The following dummy code snippet illustrates a Redux async action used for secure API integration and state management.
+
+\begin{tcblisting}{listing only,
+    colback=gray!10!white, 
+    breakable, 
+    boxsep=0pt,
+    top=1mm,
+    bottom=1mm,
+    left=1mm,
+    right=1mm,
+    listing options={
+        language=JavaScript,
+        basicstyle=\small\ttfamily,
+        keywordstyle=\color{blue},
+        commentstyle=\color{gray},
+        backgroundcolor=\color{gray!25},
+        showstringspaces=false,
+        breaklines=true
+    }
+}
+import axios from "axios";
+
+export const fetchCustomerData = () => {
+    return async (dispatch) => {
+        dispatch({ type: "FETCH_START" });
+
+        try {
+            const response = await axios.get("/api/customer");
+
+            dispatch({
+                type: "FETCH_SUCCESS",
+                payload: response.data
+            });
+        } catch (error) {
+            dispatch({
+                type: "FETCH_ERROR",
+                payload: error.message
+            });
+        }
+    };
+};
+\end{tcblisting}
+
+\section{Authentication Workflow Example}
+
+The following dummy code snippet represents a simplified OTP verification workflow used for secure customer authentication.
+
+\begin{tcblisting}{listing only,
+    colback=gray!10!white, 
+    breakable, 
+    boxsep=0pt,
+    top=1mm,
+    bottom=1mm,
+    left=1mm,
+    right=1mm,
+    listing options={
+        language=JavaScript,
+        basicstyle=\small\ttfamily,
+        keywordstyle=\color{blue},
+        commentstyle=\color{gray},
+        backgroundcolor=\color{gray!25},
+        showstringspaces=false,
+        breaklines=true
+    }
+}
+const verifyOTP = async (otpCode) => {
+    try {
+        const response = await fetch("/api/verify-otp", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ otp: otpCode })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            console.log("Authentication successful");
+        } else {
+            console.log("Invalid OTP");
+        }
+    } catch (error) {
+        console.log("Verification failed");
+    }
+};
+\end{tcblisting}
+
+\section{Offer Versioning Workflow Example}
+
+The following dummy code snippet demonstrates a simplified workflow for cloning and updating financial offers safely.
+
+\begin{tcblisting}{listing only,
+    colback=gray!10!white, 
+    breakable, 
+    boxsep=0pt,
+    top=1mm,
+    bottom=1mm,
+    left=1mm,
+    right=1mm,
+    listing options={
+        language=JavaScript,
+        basicstyle=\small\ttfamily,
+        keywordstyle=\color{blue},
+        commentstyle=\color{gray},
+        backgroundcolor=\color{gray!25},
+        showstringspaces=false,
+        breaklines=true
+    }
+}
+const cloneOffer = (existingOffer) => {
+    return {
+        ...existingOffer,
+        version: existingOffer.version + 1,
+        status: "DRAFT"
+    };
+};
+
+const publishOffer = (offer) => {
+    if (offer.approved) {
+        offer.status = "LIVE";
+    }
+
+    return offer;
+};
+\end{tcblisting}
