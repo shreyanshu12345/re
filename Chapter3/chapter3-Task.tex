@@ -1,17 +1,283 @@
 \chapter{Tasks Performed}
 
+This chapter presents a detailed account of the technical tasks undertaken during the internship at Hyperface. It describes the scope and objectives of the assigned work, the architecture and design decisions made, the implementation approach for each major module and feature, the security and authentication systems developed, the UI and experience improvements delivered, and the testing and validation methodologies applied. The work described in this chapter was performed on the CBCC-PWA (Co-Branded Credit Card Progressive Web Application) platform, which serves as the primary customer-facing interface for Hyperface's co-branded credit card programs.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Summary of Tasks Performed}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-During the internship, I contributed to the development and enhancement of the \textbf{CBCC-PWA (Co-Branded Credit Card Progressive Web App)}, a mobile-first financial platform designed for credit card customers. I worked extensively with React, Redux, TypeScript, REST APIs, and Progressive Web Application (PWA) architecture to develop scalable and reusable frontend components for modules such as Card Management, EMI Management, Customer Care, and Offer Management. I also improved application responsiveness and user experience by implementing modern UI enhancements including CSS variables, theme tokens, glassmorphism effects, and micro-animations, which helped create a more consistent and visually optimized interface across devices.
+\subsection{Overview of Contributions}
 
-\section{Problem Statement/Goal}
+The internship involved substantive frontend engineering contributions to the CBCC-PWA platform, working as an active member of the OMS team. The work spanned multiple areas of the application, including the implementation and enhancement of functional modules for card management, EMI management, customer care, and offer management; the integration of secure authentication flows for sensitive operations; the development and documentation of the Live Offer Versioning Workflow for safe management of financial offers in production; and the implementation of UI improvements including design token systems, glassmorphism visual effects, and micro-animation enhancements that modernized the application's visual design.
 
-The primary objective of the assigned work was to improve the scalability, usability, and maintainability of the CBCC-PWA platform while ensuring secure and seamless customer interactions. The project addressed challenges related to modernizing the existing user interface, implementing safe workflows for updating live financial offers, and enabling secure API communication using OTP/MPIN-based authentication mechanisms. Another key goal was to support dynamic feature control based on banking restrictions and customer account status, thereby improving operational reliability and user experience.
+Throughout the internship, the emphasis was on contributing production-quality code to live systems rather than isolated experimental projects. Each feature and enhancement was developed through the team's standard pull request and code review workflow, deployed to the staging environment for quality assurance validation, and ultimately released to the production application where it was used by real credit card customers. This production context placed a premium on correctness, reliability, and security in all development decisions.
 
-\section{Implementation Details}
+\subsection{Scope of Technical Work}
 
-The frontend application was implemented using a reusable component-based architecture with React, Redux, and TypeScript, allowing easier maintenance and faster feature development. I contributed to secure API integration by implementing centralized authentication handling that supported request validation, OTP/MPIN verification, session management, and secure state synchronization using Redux. A significant part of the internship involved contributing to the \textbf{Hyperface Live Offer Versioning Workflow}, where I helped implement and document mechanisms such as automatic offer cloning, field-level change detection, maker-checker approval flow, and controlled publishing strategies to ensure safe updates to active financial offers without disrupting customer journeys or reward tracking.
+The scope of the technical work can be organized into three broad categories. The first category is feature development, which involves implementing new or enhanced functionality in the CBCC-PWA's functional modules. The second is infrastructure and architecture work, which involves improving the application's internal organization, component design patterns, API integration architecture, and state management structures. The third is UI and experience quality improvements, which involves enhancements to the visual design, responsiveness, accessibility, and interaction quality of the application.
 
+Within the feature development category, the most significant contribution was the implementation of the Live Offer Versioning Workflow, which addressed a critical operational need for safely updating financial offers that are live in production. This workflow involved design, implementation, testing, and documentation work spanning both the frontend interface used by operations teams to manage offers and the CBCC-PWA interface through which customers interact with offers.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem Statement and Goals}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Primary Problem Statement}
+
+The CBCC-PWA at the outset of the internship faced several challenges that informed the priorities and direction of the work undertaken. The first challenge was the need to improve the scalability and maintainability of the frontend codebase as the application grew in complexity and the number of features supported increased. As with many rapidly developed software products, some areas of the codebase had accumulated technical debt in the form of duplicated logic, inconsistent component interfaces, and tightly coupled dependencies that made adding new features more difficult and risky than it should have been.
+
+The second challenge was the requirement to deliver secure authentication for sensitive financial operations within the application. Operations such as EMI activation, card blocking and unblocking, and payment authorization require explicit customer confirmation to prevent unauthorized account changes. The existing authentication flows lacked the consistency and robustness needed to reliably enforce these requirements across all sensitive operations, creating both security and user experience issues.
+
+The third challenge related directly to offer management: the operations team needed a mechanism to update the details of live financial offers — such as cashback percentages, eligible merchant categories, or promotional validity periods — without disrupting the experiences of customers who had already activated those offers or were in the middle of relevant transactions. The absence of such a mechanism meant that offer updates were risky operations that could create inconsistencies between the offer terms a customer had agreed to and the terms currently displayed in the application.
+
+The fourth challenge was a deficit in UI quality and visual modernity relative to the design standards expected by customers using contemporary mobile applications. The application's visual design was functional but lacked the polish, consistency, and visual sophistication that would characterize a premium financial product associated with established consumer brands.
+
+\subsection{Goals and Acceptance Criteria}
+
+The goals established for the internship work addressed each of these challenges. For the codebase maintainability goal, the objective was to refactor the component library toward a more consistent, reusable architecture by identifying and extracting common patterns into shared components, establishing prop interfaces that provided clear contracts between components, and applying TypeScript types consistently to eliminate implicit any types that obscured data structures.
+
+For the secure authentication goal, the objective was to implement a centralized authentication handling system that consistently enforced OTP and MPIN verification requirements for all sensitive operations, managed authentication state in Redux with appropriate security properties including token expiry and refresh handling, and provided a smooth user experience for the authentication step that minimized friction for legitimate operations while maintaining robust security.
+
+For the Live Offer Versioning Workflow goal, the objective was to design and implement a system that enabled the operations team to update the details of live offers by creating versioned copies of existing offers, making changes to the draft version while the original remained live, obtaining approval for the changes through a maker-checker authorization workflow, and atomically publishing the updated version to replace the live version without any customer-facing disruption.
+
+For the UI quality goal, the objective was to implement a design token system based on CSS custom properties that codified the application's visual design language in a centralized and configurable manner, apply glassmorphism visual effects to key interface elements, and add micro-animation transitions that improved the perceived responsiveness and polish of the application.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Frontend Architecture and Component Design}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Component Hierarchy and Design Principles}
+
+The CBCC-PWA is organized around a hierarchical component architecture in which components are classified according to their level of abstraction and their specificity to the application's domain. At the base level are primitive components that encapsulate basic UI elements such as buttons, input fields, dropdown menus, modals, badges, and loading spinners with the application's design language applied consistently. These primitive components accept configuration props and expose a predictable interface that makes them easy to use throughout the application.
+
+Above the primitive level are composite components that assemble multiple primitives into reusable patterns specific to the application's domain, such as a card number display component that formats the card number with appropriate masking and styling, a transaction list item component that consistently presents a single transaction record, or an offer card component that displays the key details of a promotional offer. These composite components encapsulate the presentation logic for domain concepts and ensure that identical domain concepts are always rendered identically regardless of where they appear in the application.
+
+At the top level of the hierarchy are page and module components that compose composite and primitive components into complete user interfaces for specific application sections. Module components manage the data fetching, state coordination, and business logic for their respective sections of the application, delegating the actual rendering to the components beneath them in the hierarchy. This separation of concerns between data management and presentation logic simplifies both the modules themselves and the components they use, making each part individually testable and modifiable.
+
+\subsection{TypeScript Type System Design}
+
+TypeScript's type system was used throughout the application to define clear interfaces for all major data structures, component prop types, API request and response shapes, and Redux state structures. The investment in comprehensive typing provided several immediate benefits during development and continues to benefit future maintainers of the codebase.
+
+API response types were defined as TypeScript interfaces that precisely described the shape of each API endpoint's response data. These types were used both in the API integration layer to type-check the mapping of raw API responses to application state structures and in the Redux reducer and selector code to ensure that state transformations handled all expected properties correctly. When the backend API changed its response shape, TypeScript type errors immediately identified all the places in the frontend code that needed to be updated, preventing silent breakages caused by changed data structures.
+
+Component prop types were defined as TypeScript interfaces or type aliases that specified all required and optional props for each component, along with their types and any validation constraints. The use of \texttt{React.FC<Props>} generic types with explicitly defined prop interfaces eliminated implicit \texttt{any} types for component props, providing IDE autocompletion support for component usage and compile-time validation that components were used correctly throughout the application.
+
+Redux state types defined the expected shape of the state subtree managed by each reducer, ensuring that state updates applied by reducer functions were consistent with the declared state shape and that selectors accessing specific state properties were correctly typed. This typing was particularly valuable in the authentication state management work, where the state included multiple interdependent properties related to token status, session expiry, and authentication step progress that needed to remain consistent with each other.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Module Development: Card Management}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Card Management Module Overview}
+
+The Card Management module provides customers with a comprehensive view of their credit card account and enables them to perform essential account management operations through the CBCC-PWA interface. The module serves as one of the primary entry points for customer interaction with their credit card, presenting the most important account information prominently and providing clear pathways to the self-service actions customers most commonly need.
+
+The module presents the credit card's key attributes including the masked card number with the option to reveal the full number through an authenticated reveal flow, the cardholder name, the card network logo, and the card's current status. Below the card display, summary financial information is presented, including the available credit limit, the current outstanding balance, the amount due in the current billing cycle, and the payment due date. This information is fetched from the Credit Pro API and cached in the Redux store with appropriate cache expiry logic to balance data freshness with API request volume.
+
+\subsection{Card Control Operations}
+
+The card control operations supported by the Card Management module include card blocking and unblocking, international transaction enablement and disablement, online transaction controls, and contactless payment toggles. Each of these operations modifies the card's operational parameters in the Credit Pro system and requires explicit customer authentication through the MPIN verification flow before the change is applied.
+
+The card blocking flow, used when a customer suspects their card has been lost or stolen, presents a confirmation dialog that clearly explains the consequences of blocking the card and requires the customer to confirm their intent before proceeding to the MPIN authentication step. Upon successful MPIN verification, the blocking request is sent to the Card Management API, which updates the card status in the Credit Pro platform to prevent further transactions from being authorized. The UI immediately reflects the updated card status and provides clear instructions for the customer's next steps, including how to unblock the card or request a replacement.
+
+The implementation of these operations required careful attention to optimistic update behavior in the Redux state management layer. When a customer confirms a card operation, the UI provides immediate visual feedback of the operation in progress without waiting for the API response, improving the perceived responsiveness of the interface. If the API call succeeds, the state is updated to reflect the confirmed change. If the API call fails, the optimistic update is rolled back and an appropriate error message is displayed to the customer.
+
+\subsection{Credit Limit Management}
+
+The credit limit display and management capabilities within the Card Management module allow customers to view their current credit limit, understand the utilization ratio of their available credit, and submit a request for a credit limit review. The credit limit utilization visualization uses a progress bar component that dynamically reflects the proportion of the credit limit currently in use, with color coding that transitions from neutral at low utilization to amber and red at higher utilization levels to help customers manage their credit usage responsibly.
+
+Credit limit adjustment requests are submitted through a form that collects the customer's desired credit limit along with a brief justification. These requests are submitted to the Credit Pro API where they are queued for review by the banking partner's credit operations team. The customer is informed that their request has been received and provided with a reference number and expected response timeline.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Module Development: EMI Management}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{EMI Module Architecture}
+
+The EMI Management module enables credit card customers to convert eligible transactions into Equated Monthly Installment plans, providing a structured repayment alternative to the revolving credit default. The module encompasses three primary functional areas: the display of conversion eligibility information for existing transactions, the EMI plan selection and activation workflow, and the management interface for active EMI plans.
+
+The eligibility assessment for EMI conversion is handled by the EMI Eligibility API, which evaluates a transaction against the banking partner's eligibility rules based on criteria including the transaction amount, the merchant category code, the transaction age, and the customer's account status. The response includes eligibility status, available tenure options, applicable interest rates, and computed monthly installment amounts for each eligible tenure. These eligibility assessments are fetched on demand when a customer selects a transaction to view EMI options, minimizing unnecessary API calls while ensuring the information presented is current.
+
+\subsection{EMI Activation Workflow}
+
+The EMI activation workflow guides the customer through the steps of selecting a transaction for conversion, choosing a repayment tenure, reviewing the cost details of the selected plan, and confirming the conversion through OTP authentication. Each step of the workflow is implemented as a distinct component within a multi-step flow pattern that maintains state between steps using the React \texttt{useReducer} hook, which provided a more predictable state management model for the multi-step flow than a series of independent \texttt{useState} calls would have.
+
+The tenure selection step presents the available options in a visually clear format that allows the customer to compare the monthly installment amount, the total interest cost, and the effective annual interest rate across all available tenures. Selecting a tenure updates the summary panel at the bottom of the screen in real time, providing immediate feedback on the financial implications of each choice without requiring a page transition or API call.
+
+The cost review step presents a comprehensive summary of the selected plan, including the original transaction details, the selected tenure, the monthly installment schedule, the processing fee if applicable, and the total cost of the EMI plan compared to paying the transaction balance in full immediately. This transparency in cost presentation is important both for regulatory compliance reasons and for building customer trust in the product.
+
+The OTP confirmation step integrates with the centralized authentication system to request and verify a one-time password sent to the customer's registered mobile number. Upon successful OTP verification, the conversion request is submitted to the EMI Management API, which creates the EMI schedule in the Credit Pro system, adjusts the available credit limit to reflect the EMI commitment, and returns the confirmed EMI plan details that are displayed in the confirmation screen.
+
+\subsection{Active EMI Plan Management}
+
+The active EMI plans view presents all currently active EMI schedules associated with the customer's credit card account. Each plan is displayed with the original transaction reference, the selected tenure, the monthly installment amount, the number of installments paid and remaining, and the total outstanding balance. A detailed view for each plan shows the complete installment schedule with payment dates and amounts, allowing customers to see exactly when future payments will be due.
+
+The implementation of the active plans view required careful handling of the data shape returned by the EMI Management API, which returned a nested structure containing plan-level details and an array of individual installment records. TypeScript interfaces for the API response ensured that all nested properties were correctly typed, and selector functions derived the display-ready data from the raw API response, keeping the component code focused on rendering rather than data transformation.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Module Development: Customer Care}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Customer Care Module Design}
+
+The Customer Care module provides customers with self-service tools for resolving common issues and a structured mechanism for submitting service requests for issues that require operations team involvement. The design philosophy of the module emphasizes enabling customers to find answers and take corrective actions independently wherever possible, while providing clear and frictionless pathways to human support when self-service is insufficient.
+
+The module is organized into three functional areas: a FAQ and help article section, a service request submission and tracking interface, and an in-app notification center that displays important account alerts and service updates. The FAQ section is populated with content managed through the platform's content management capabilities, allowing the operations team to update help content without requiring engineering involvement.
+
+\subsection{Service Request Management}
+
+The service request system allows customers to raise formal issues or requests with Hyperface's operations team. Service requests are categorized according to a taxonomy of issue types that covers the most common customer scenarios, including transaction disputes, card replacement requests, statement copy requests, banking partner escalations, and general account inquiries. The category selection step of the request flow customizes the subsequent steps to collect the specific information most relevant to each issue type.
+
+For transaction dispute requests, the flow guides the customer through identifying the disputed transaction from their transaction history, selecting the reason for the dispute from a defined set of options, and providing any additional context in a text field. The dispute submission creates a case record in the operations management system and sends an automated acknowledgment to the customer with a case reference number and expected resolution timeline.
+
+The service request tracking interface allows customers to view all their open and recently resolved cases, see the current status of each case, and access the history of communications related to each case. Status updates made by the operations team are reflected in the tracking interface in near-real-time, giving customers visibility into the progress of their requests without requiring them to contact support for status updates.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Module Development: Offer Management}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Offer Display and Discovery}
+
+The Offer Management module provides customers with a browseable catalog of available offers, cashback programs, and promotional campaigns associated with their credit card. Offers are fetched from the Offer Management API and displayed in a card-based grid layout with visual imagery, offer highlights, and key terms prominently displayed. Each offer card provides enough information for the customer to assess relevance and interest at a glance, with a detail view available for customers who want to understand the full terms and conditions.
+
+Offers are categorized and filterable by type (cashback, rewards bonus, merchant offer, category offer), by merchant or merchant category, and by validity period. A personalization layer in the offer serving API ranks and surfaces offers most relevant to each customer based on their transaction history and demographic profile, ensuring that the offers seen at the top of the catalog are the ones most likely to be relevant and valuable to that specific customer.
+
+\subsection{Offer Activation}
+
+Eligible offers require explicit customer activation before the associated benefits will apply to qualifying transactions. The activation requirement ensures that offers are attributed correctly, that customers are aware of the offers they have activated, and that the operational load of processing offer benefits is bounded by the activation rate rather than applying to all cardholders regardless of awareness or intent.
+
+The activation flow is designed to be minimal-friction for the customer: from the offer detail view, a single activation button initiates the process. For offers that are universally eligible without conditions, activation is immediate and the offer status is updated in the UI to show as active with an acknowledgment notification. For offers that have specific eligibility conditions or limited allocation, the system checks eligibility before confirming activation and informs the customer of any conditions they must meet for the offer to apply to their transactions.
+
+Activated offers are tracked in the customer's Offer Management module with their current usage status, showing how much of the offer benefit has been utilized and how much remains available within the validity period. Expiring offers are highlighted to prompt engagement from customers who have not yet utilized their activated benefits.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Security and Authentication Implementation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Centralized Authentication Architecture}
+
+A significant architectural contribution of the internship was the design and implementation of a centralized authentication handling system that consistently manages OTP and MPIN-based authentication requirements across all sensitive operations in the CBCC-PWA. Prior to this work, authentication flows in the application were implemented inconsistently, with different modules handling authentication requirements in slightly different ways, creating maintenance overhead and the risk that some sensitive operations might not correctly enforce authentication requirements.
+
+The centralized authentication system is implemented as a combination of a Redux slice managing authentication state and a set of React context providers and custom hooks that expose authentication capabilities to component code. The authentication Redux slice maintains the state of all authentication-related concerns, including the current session token and its expiry time, the status of any in-progress authentication step (idle, pending OTP entry, pending MPIN entry, verifying, success, error), the type of operation for which authentication was requested, and any authentication-related error messages.
+
+\subsection{OTP Authentication Flow}
+
+The OTP authentication flow is initiated when a customer triggers a sensitive operation that requires OTP verification. The authentication system intercepts the operation, dispatches an action to update the authentication state to reflect the pending OTP step, and renders the OTP entry modal in the foreground. The OTP entry modal displays a short instruction explaining why authentication is required, an input field for the six-digit OTP, a countdown timer showing the remaining validity period of the sent OTP, and a resend option that becomes available after the initial validity period expires.
+
+OTP submission dispatches a verification request to the authentication API, which validates the submitted OTP against the one sent to the customer's registered mobile number and returns either a success response with a short-lived operation authorization token or an error response with an appropriate error message. The authorization token is stored in the Redux authentication state and included in the subsequent sensitive operation API request as evidence that the customer has authenticated, allowing the backend to verify that the operation was preceded by a valid authentication step.
+
+The handling of OTP resend requests, invalid OTP entries, and OTP expiry scenarios was implemented with particular care to provide clear feedback to the customer in each case while avoiding security weaknesses such as unlimited retry attempts. After a configurable number of failed OTP attempts, the authentication flow locks out further attempts for the current operation, requiring the customer to restart the sensitive operation from the beginning.
+
+\subsection{MPIN Authentication Flow}
+
+MPIN authentication is used for operations where the security requirements demand a stronger authentication signal than OTP, or where the operational context makes OTP verification less convenient. The MPIN entry interface provides a numeric keypad component with visual feedback for each keypad press and a display of the number of digits entered without revealing the actual digits.
+
+The MPIN submission and verification process follows the same general pattern as OTP authentication, with the MPIN submitted to the authentication API and a short-lived authorization token returned upon successful verification. The MPIN authentication flow includes additional security considerations around protecting the MPIN value during entry and transmission: the keypad component avoids storing the in-progress MPIN in a form accessible to browser developer tools, and the MPIN is transmitted to the API over the already-encrypted HTTPS connection without appearing in application logs or error messages.
+
+\subsection{Session Management and Token Refresh}
+
+Session management in the CBCC-PWA involves handling the lifecycle of authentication tokens used for standard API calls alongside the operation-specific authorization tokens used for sensitive operations. Standard session tokens have a limited validity period after which they must be refreshed to maintain the session without requiring the customer to log in again. The token refresh logic is implemented as a Redux middleware that intercepts API call failures caused by expired session tokens, triggers a token refresh request in the background, and retries the failed API call with the refreshed token once the refresh succeeds.
+
+This transparent token refresh mechanism ensures that customers who are actively using the application do not experience unexpected session expiry errors during normal operations, while the finite token validity periods limit the window during which a compromised token could be exploited. Token refresh failures, which indicate that the session has definitively expired, result in the customer being redirected to the login flow with an appropriate notification explaining why re-authentication is required.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Live Offer Versioning Workflow}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Problem Background and Motivation}
+
+The Live Offer Versioning Workflow addresses one of the most challenging operational scenarios in managing a live financial product: the need to update the details of an offer that is currently active and potentially being used by customers. In a credit card rewards context, offers may be live for extended periods during which circumstances change — a merchant may alter the terms of a partnership, a budget allocated to a cashback campaign may be exhausted ahead of its original end date, or a regulatory review may require changes to the way an offer is described or calculated.
+
+Without a versioning mechanism, updating a live offer presents several risks. If the offer details visible to customers in the CBCC-PWA are updated immediately, customers who had based their spending decisions on the previous offer terms may find that the rules have changed unexpectedly, eroding trust and potentially generating complaints or disputes. If the changes are made directly to the offer record in the database, there is no audit trail of what the previous terms were, making it difficult to retroactively determine what terms applied to transactions made before the change.
+
+A further challenge is that offer updates in a financial context require controls to prevent unauthorized or erroneous changes. A maker-checker authorization model, where one person initiates a change and a different authorized person reviews and approves it before it takes effect, is a standard risk control in financial operations. The offer management system needed to support this model to meet the banking partner's operational risk requirements.
+
+\subsection{Architecture of the Versioning System}
+
+The Live Offer Versioning Workflow is implemented as a state machine that governs the lifecycle of offer versions from creation through review, approval, and publication. The state machine has the following states: \texttt{DRAFT} (a version that has been created but not yet submitted for approval), \texttt{PENDING\_APPROVAL} (a version that has been submitted for review by a second authorized user), \texttt{APPROVED} (a version that has been approved and is ready to be published), \texttt{LIVE} (the currently active version of the offer), and \texttt{ARCHIVED} (a previous version that has been superseded by a newer version or deactivated).
+
+When an operations user wants to update a live offer, the system automatically creates a new DRAFT version by cloning the existing LIVE version. The clone operation copies all the attributes of the live offer into the new draft version, providing a starting point that reflects the current state rather than requiring the user to reconstruct the offer from scratch. This automatic cloning mechanism prevents accidental omission of attributes that the user did not intend to change.
+
+\subsection{Field-Level Change Detection}
+
+A field-level change detection system tracks which attributes of the draft version differ from the live version. As the operations user makes edits to the draft, the change detection system updates a change manifest that lists each modified attribute along with the previous value (from the live version) and the new value (from the draft). This change manifest is persisted alongside the draft version and displayed to the approver when the draft is submitted for review.
+
+The change detection comparison is performed using a deep equality function that correctly handles the nested data structures used in offer definitions, including arrays of eligible merchants, category codes, and benefit tier definitions. The diff output is presented to the approver as a structured summary that clearly highlights what has changed, making the review step efficient and ensuring that the approver has a complete and accurate picture of the proposed changes before deciding whether to approve them.
+
+\subsection{Maker-Checker Approval Flow}
+
+The maker-checker approval flow enforces the requirement that the person who created or modified the draft is different from the person who approves it. The system tracks the identity of the user who created the draft and the user who last modified it, and enforces at the approval step that the approving user is not the same as the modifying user. This control prevents a single user from both making and approving their own changes, maintaining the independence of the review function.
+
+When a draft is submitted for approval, it transitions to the PENDING\_APPROVAL state and a notification is sent to the users who have the approver role for the relevant offer program. The approver receives a review task that presents the proposed changes, the change manifest, and the context behind the requested changes if the submitter has provided notes. The approver can either approve the draft, causing it to transition to the APPROVED state, or reject it with comments, causing it to return to the DRAFT state where the submitter can make further modifications.
+
+\subsection{Controlled Publishing Strategy}
+
+The publishing step transitions an approved draft version to the LIVE state and simultaneously transitions the previously live version to the ARCHIVED state. This transition is performed atomically: both state changes are applied in a single database transaction, ensuring that at no point is there either zero or more than one live version of an offer. The atomic transition is critical for maintaining the consistency of the offer catalog as seen by customers.
+
+The publishing strategy also supports the scheduling of future publication times, allowing the operations team to prepare an updated offer version in advance and schedule its automatic publication at a specific time, such as the start of a promotional period or the beginning of a new month. Scheduled publications are handled by a background job that monitors for approved versions with scheduled publication times and triggers the publish operation when the scheduled time arrives.
+
+From the customer's perspective in the CBCC-PWA, the transition from one offer version to the next is transparent. The offer display component fetches the current live version from the API, which always returns the version in the LIVE state. When a new version is published, subsequent API calls return the new version's details, and any customer who refreshes the offer view sees the updated terms. Customers who have already activated the previous version and have completed qualifying transactions retain eligibility for the benefits promised under the version they activated.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{UI and Visual Design Enhancements}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Design Token System and CSS Variables}
+
+The implementation of a design token system using CSS custom properties (variables) was a foundational improvement to the application's visual consistency and future maintainability. Prior to this work, visual design values such as colors, font sizes, spacing units, border radii, shadow definitions, and transition durations were scattered throughout the codebase as hardcoded values in component-level CSS modules. This distributed approach made it difficult to make consistent global design changes, such as updating the application's primary color for a new co-branded partner deployment, without hunting through every component's stylesheet.
+
+The design token system centralizes all visual design values into a set of named CSS custom properties defined in a global stylesheet. The token naming convention follows a two-level hierarchy: semantic tokens that describe the intended use of a value (for example, \texttt{--color-primary}, \texttt{--color-surface}, \texttt{--spacing-md}) are defined in terms of primitive tokens that define the raw values (for example, \texttt{--blue-500}, \texttt{--gray-50}, \texttt{--spacing-base-4}). This hierarchy allows the primitive tokens to be redefined for different partner themes while the semantic tokens remain stable, enabling theme customization without any changes to component stylesheets.
+
+The migration of existing component stylesheets from hardcoded values to design token references was undertaken systematically, proceeding module by module. Each migrated component was tested visually to verify that the design token values correctly reproduced the intended appearance. The resulting codebase is significantly more maintainable for design changes and more straightforwardly configurable for multi-partner deployments.
+
+\subsection{Glassmorphism Visual Effects}
+
+Glassmorphism is a visual design style characterized by frosted-glass-like translucency effects applied to UI panels and cards, creating a sense of layered depth in the interface. The implementation of glassmorphism effects in the CBCC-PWA involved applying \texttt{backdrop-filter: blur()} CSS properties to key UI panels, combined with semi-transparent background colors using \texttt{rgba} values, subtle border styling, and box shadow definitions that create the characteristic layered glass appearance.
+
+The credit card display component in the Card Management module was the primary target for glassmorphism treatment, as it is the most visually prominent element in the application and the one most associated with the premium aesthetic of a co-branded credit card product. The card component was redesigned with a layered glass effect applied to the card panel, creating an impression of depth that distinguishes it from the flat card designs common in earlier versions of the application.
+
+Performance considerations were important in the implementation of glassmorphism effects, as \texttt{backdrop-filter} is a GPU-composited CSS property that can cause performance issues if applied to too many elements or to elements with large surface areas on lower-powered mobile devices. The implementation was limited to a small number of high-impact elements and tested across a representative range of target devices to verify that performance impact was acceptable before being included in the production release.
+
+\subsection{Micro-Animations and Interaction Design}
+
+Micro-animations are subtle motion effects applied to interface elements in response to user interactions or state changes. Well-implemented micro-animations serve several functional purposes: they confirm that user actions have been registered and are being processed, they guide attention to important state changes, they smooth visual transitions between different application states, and they contribute to the overall perception of quality and polish in the application.
+
+The micro-animation implementations introduced during the internship included several categories of interaction feedback. Button press animations provide a brief scale-down effect when a button is tapped, giving immediate tactile feedback that the press was registered. Loading state animations transition smoothly from content to skeleton loading states and back, avoiding the jarring visual jump that occurs when content disappears and reappears without transition. List item animations stagger the entrance of individual items when a list is first loaded or when the list content changes, creating a visually pleasing cascade effect that also communicates to the user that the displayed content is fresh.
+
+All animations are implemented using CSS transitions and animations rather than JavaScript-driven animation libraries, ensuring that the animations run on the GPU's compositor thread and do not interfere with the JavaScript main thread's processing of user interactions and application logic. A \texttt{prefers-reduced-motion} media query is respected throughout the animation system, disabling or substituting reduced-motion alternatives for all animations when the user's device is configured to reduce motion, ensuring accessibility for users who are sensitive to motion.
+
+\subsection{Responsive Design and Cross-Device Optimization}
+
+The CBCC-PWA is designed for use on a wide range of mobile devices, from older smartphones with small screens and limited processing power to modern flagship devices with large, high-density displays. Ensuring that the application provides an excellent experience across this device range required careful attention to responsive layout implementation, image and asset optimization, and performance optimization for lower-powered devices.
+
+Responsive layouts are implemented using CSS Flexbox and CSS Grid, which provide flexible and powerful layout capabilities that adapt naturally to different screen dimensions. Breakpoints are defined as design tokens and applied consistently across the application to ensure that layout changes occur at predictable and visually appropriate screen width thresholds. The layout system prioritizes the mobile experience first, with progressive enhancements for larger screens where appropriate.
+
+Touch interaction design received specific attention, as mobile users interact with the application through touch rather than the pointer-based interactions for which many web UI patterns were originally designed. Touch targets are sized and spaced to accommodate the variability of finger-press accuracy on touch screens, following the recommendation of at least 44 × 44 CSS pixels for interactive elements. Swipe gestures are implemented for specific interactions where they provide a more natural interaction model than button-based alternatives.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Testing and Validation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-I performed extensive testing and validation activities to ensure application stability, responsiveness, and secure workflow execution across different modules. The work included UI validation, API integration testing, responsive testing, debugging, and workflow verification with special attention to secure transaction handling and EMI-related operations. These contributions improved frontend scalability, strengthened synchronization between frontend and backend systems, and enhanced the overall reliability and modernization of the CBCC-PWA ecosystem.
+\subsection{Unit Testing Strategy}
+
+Unit tests were written for all new and modified components, utility functions, Redux reducers, and selector functions introduced or changed during the internship. The testing strategy prioritized behavior-based tests that verify what the component renders and how it responds to user interactions, rather than implementation-based tests that verify internal implementation details such as state variable values or method call counts.
+
+For the authentication system components, unit tests verified that the OTP input component correctly validated input length and format, that the MPIN keypad component correctly accumulated and cleared digit inputs, and that the authentication Redux reducer correctly applied each action type to the state. Edge case tests were written for scenarios including maximum retry exceeded, token expiry during an active session, and concurrent authentication requests from different application sections.
+
+For the offer management components, unit tests verified that the change detection logic correctly identified field-level differences between offer versions across a range of offer data shapes, that the approval workflow components correctly transitioned through each workflow state, and that the offer catalog correctly filtered and sorted offers based on the active filter criteria.
+
+\subsection{Integration Testing}
+
+Integration tests for the module workflows verified that sequences of user interactions produced the expected end-to-end behaviors across multiple components and the Redux state layer. The EMI activation workflow integration test simulated the full user journey from selecting a transaction through tenure selection, cost review, OTP authentication, and activation confirmation, verifying that each step transitioned correctly to the next and that the Redux state was updated correctly throughout the workflow.
+
+Mock service workers were used in integration tests to simulate the API layer, allowing integration tests to verify the frontend application's behavior under different API response scenarios without requiring a live backend connection. Test scenarios covered both happy-path flows with successful API responses and error-handling flows with various API error conditions, ensuring that the application degraded gracefully and communicated errors clearly to the user in all failure scenarios.
+
+\subsection{Responsive and Cross-Browser Testing}
+
+Responsive testing was conducted across a representative set of device sizes using browser developer tools to simulate different screen dimensions, supplemented by testing on physical devices representing the most common device types in Hyperface's target user base. Testing covered all major CBCC-PWA modules to verify that layouts, text sizes, touch targets, and interactive elements behaved correctly at each screen size.
+
+Cross-browser compatibility testing was conducted on the major mobile browsers, including Chrome for Android and Safari for iOS, as well as the in-app WebViews used by some apps to display web content. The Progressive Web Application features, including service worker registration, cache management, and push notification subscription, were specifically verified on both Android and iOS to confirm that PWA behaviors worked as expected on each platform.
+
+Performance testing using browser performance profiling tools measured the page load times, time to interactive, and JavaScript bundle execution times for each module before and after the micro-animation and design token changes, verifying that the visual enhancements did not introduce unacceptable performance regressions. Results confirmed that the changes maintained or improved perceived performance metrics relative to the pre-enhancement baseline.
+
+This chapter has provided a comprehensive description of the technical tasks performed during the internship, covering the architecture, implementation details, security considerations, and testing approaches for each major area of contribution. The work described spans feature development, infrastructure improvement, security enhancement, and visual quality improvement across the CBCC-PWA platform. Chapter 4 reflects on the outcomes of this work, the learning derived from the experience, and the professional and technical development achieved through the internship.

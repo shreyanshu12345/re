@@ -1,28 +1,173 @@
 \chapter{Activities of the Department}
 
-During the internship, I was part of the OMS (Operations Management System) team at Hyperface and worked in the role of a Product Management Intern. The OMS team is responsible for managing and improving internal operational workflows, transaction monitoring systems, issue tracking processes, and platform coordination activities that support the company’s fintech products and services. The team works closely with engineering, quality assurance, operations, and business stakeholders to ensure smooth execution of product features and operational processes.
+This chapter describes the activities, structure, and working environment of the department within which the internship was conducted at Hyperface. It begins with an overview of the OMS (Operations Management System) team and its role within the organization, followed by a detailed examination of the technical infrastructure, tools, methodologies, and day-to-day workflows that characterize the team's operations. The chapter also discusses the intern's specific responsibilities, the cross-functional collaborations that shaped the internship experience, and the broader organizational processes that governed the team's activities throughout the internship period.
 
-As a Product Management Intern, I assisted in understanding product requirements, analyzing workflows, documenting features, coordinating with development teams, and supporting product planning activities. The role involved collaborating with different teams to improve operational efficiency, monitor product functionality, and contribute to the development of scalable fintech solutions. The department follows a collaborative and fast-paced work environment focused on innovation, problem-solving, and continuous product improvement.
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Departmental Role and Objectives}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The OMS (Operations Management System) team at Hyperface is responsible for managing and improving operational workflows, transaction handling systems, issue tracking processes, and internal platform coordination activities. The department focuses on ensuring that fintech products and digital credit solutions operate efficiently, securely, and reliably. As part of the product management function, the team works closely with engineering, operations, quality assurance, and business teams to streamline processes and support smooth product execution.
+\subsection{Role of the OMS Team within Hyperface}
 
-The OMS team contributes significantly to the company’s overall product lifecycle by assisting in requirement analysis, workflow optimization, feature coordination, product monitoring, and operational support. The department helps bridge the gap between business requirements and technical implementation, ensuring that products are developed, tested, deployed, and maintained effectively. By supporting operational efficiency and product scalability, the team plays an important role in delivering reliable digital banking and credit solutions to clients and customers.
+The Operations Management System (OMS) team at Hyperface occupies a unique and strategically important position within the organization. Unlike purely engineering-focused teams that build and maintain specific products, the OMS team sits at the intersection of operations, product management, and engineering, with a mandate to design, build, and maintain the internal platforms, workflows, and tools that power Hyperface's day-to-day operational activities. The team's primary responsibility is to ensure that the fintech programs running on Hyperface's platform are managed efficiently, reliably, and in compliance with operational and regulatory requirements.
 
+The OMS team is distinct from the customer-facing product teams in that its primary customers are the internal operations staff, banking partner operations teams, and compliance personnel who use Hyperface's internal platforms to manage credit card programs. The quality of the tools and workflows that the OMS team builds has a direct and significant impact on the efficiency of these operations teams and, by extension, on the quality and timeliness of the service delivered to Hyperface's banking partners and their end customers.
+
+The team's responsibilities can be broadly categorized into three areas: building and maintaining internal operational platforms, managing and improving operational workflows and processes, and supporting the coordination between Hyperface's engineering teams and its banking partner operations counterparts. Each of these areas involves distinct technical, process, and communication challenges that the team addresses through a combination of software engineering, process design, and stakeholder collaboration.
+
+\subsection{Departmental Objectives and Key Responsibilities}
+
+The OMS team's primary objectives are aligned with Hyperface's broader operational goals of maintaining high standards of reliability, compliance, and efficiency across all credit card programs. The first and most fundamental objective is to ensure that operations staff have access to accurate, real-time information about the status of all accounts, transactions, and processes across the programs running on Hyperface's platform. This requires building and maintaining dashboards, reporting tools, and monitoring systems that surface the right information to the right people at the right time.
+
+The second major objective is to minimize the manual effort required to manage operational processes by automating repetitive tasks wherever possible and building intelligent workflows that guide operations staff through complex multi-step processes with minimal risk of error. Automation of routine processes such as transaction reconciliation, offer activation, compliance reporting, and escalation routing significantly reduces the headcount required to operate the platform at scale and improves the consistency and accuracy of operational outcomes.
+
+The third objective is to serve as the internal product ownership function for the tools and workflows used by operations and banking partner teams. This involves gathering requirements from operations stakeholders, prioritizing enhancement requests against the team's development capacity, designing improvements in collaboration with UX designers, and delivering solutions through the team's engineering resources. Effective internal product management ensures that the tools the OMS team builds continue to meet the evolving needs of the operations teams as Hyperface's business grows and its operational complexity increases.
+
+The fourth objective is to maintain strong communication channels with Hyperface's banking partner operations teams. Banking partners have their own operations staff who interact with Hyperface's platform to manage their credit card programs, and ensuring that these teams are well-supported, well-informed, and able to escalate issues effectively is an important part of maintaining the quality of the partnership relationships that are central to Hyperface's business model.
+
+\subsection{OMS Team Structure}
+
+The OMS team is a cross-functional group that brings together engineers, product managers, and operations specialists working collaboratively toward common operational goals. The team is led by a senior product manager or engineering manager who is responsible for setting the team's roadmap, managing stakeholder relationships, and ensuring the team's deliverables align with Hyperface's strategic priorities.
+
+Frontend engineers within the team build the user interfaces for the internal operational dashboards and tools, designing intuitive interfaces that allow operations staff to navigate complex operational data and perform their tasks efficiently. Backend engineers build the API services, data processing pipelines, and automation workflows that power the operational platforms. Data engineers or analytics specialists manage the data pipelines that aggregate operational data from multiple source systems and make it available for reporting and analysis.
+
+Operations specialists embedded within the OMS team provide subject matter expertise in credit card operations processes, bringing their knowledge of how operations staff actually work to inform the design of internal tools and workflows. Their close collaboration with the engineering and product members of the team is essential for ensuring that the tools built by the team accurately reflect the real needs and constraints of operational use cases.
+
+During the internship, the intern was integrated into this cross-functional team as a frontend engineering contributor, working alongside experienced engineers and under the guidance of senior team members to contribute to the CBCC-PWA platform and related internal tools.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Technical Infrastructure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The OMS (Operations Management System) team at Hyperface utilizes a modern software development and cloud-based infrastructure environment to support fintech operations and product management activities. The department primarily works with web-based dashboards, API management platforms, cloud-hosted services, issue tracking systems, and collaboration tools for monitoring workflows and coordinating product development tasks. Development and testing activities are carried out using modern software technologies, version control systems, and continuous integration and deployment (CI/CD) pipelines.
+\subsection{Development Environment and Toolchain}
 
-The team also uses internal operational management platforms, analytics dashboards, database systems, and secure cloud infrastructure for transaction monitoring and workflow management. Collaboration and documentation tools are used extensively for requirement analysis, sprint planning, feature tracking, and communication between engineering, operations, and business teams. The infrastructure is designed to support secure, scalable, and high-availability fintech applications and digital banking services.
+The OMS team and the broader engineering organization at Hyperface use a modern and well-integrated development toolchain that supports efficient software development, collaboration, and delivery. The development environment for frontend engineers is configured around Node.js as the JavaScript runtime, with the npm or Yarn package manager managing project dependencies. Version control is handled through Git, with all source code hosted in GitHub repositories organized into team-specific repositories for each major product or internal platform.
 
+Code editors and integrated development environments (IDEs) commonly used by the engineering team include Visual Studio Code with a curated set of extensions for React, TypeScript, and ESLint integration. The consistent use of shared editor configuration files, including \texttt{.editorconfig}, \texttt{.eslintrc}, \texttt{.prettierrc}, and TypeScript configuration files, ensures that code style and formatting are consistent across the team regardless of individual developer preferences. This shared configuration is maintained in version control and applied automatically through editor extensions and pre-commit hooks.
+
+The local development workflow involves running the CBCC-PWA and related services locally using development servers provided by the build tooling. Mock API responses and development-mode authentication bypass mechanisms allow frontend developers to work effectively on user interface and interaction logic without requiring a live connection to the production or staging backend services. Environment-specific configuration is managed through \texttt{.env} files that define API endpoint URLs, feature flags, and other environment-specific parameters.
+
+\subsection{Version Control and Branching Strategy}
+
+Hyperface's engineering teams follow a trunk-based development branching strategy, where all engineers work in short-lived feature branches that are merged back to the main development branch as quickly as possible. This approach minimizes the divergence between individual developer branches and the shared codebase, reducing the complexity and risk associated with long-running branches and large, difficult-to-review merge requests.
+
+Feature branches are named according to a consistent convention that includes the type of work (feature, bugfix, refactor, chore), the issue tracking identifier from the project management system, and a brief descriptive slug. For example, a branch implementing a new EMI management feature might be named \texttt{feature/OMS-245-emi-tenure-selection-ui}. This naming convention makes it easy to identify the purpose and context of any branch and to link it to the corresponding task in the project management system.
+
+Pull requests submitted for code review include a structured description that summarizes the purpose of the change, references the relevant issue or requirement, describes the testing performed, and notes any deployment or configuration considerations. This structure ensures that reviewers have the context they need to review changes effectively and that the pull request history serves as a useful record of decisions and rationale for future reference.
+
+\subsection{CI/CD Pipeline and Build System}
+
+The continuous integration and continuous deployment (CI/CD) pipeline automates the build, test, and deployment processes for all changes to the CBCC-PWA and related platforms. When a pull request is submitted, the CI pipeline automatically triggers a series of checks that must pass before the pull request can be merged. These checks include compilation and type checking to verify that the TypeScript code compiles without errors, linting to enforce code style and catch common programming errors, unit test execution to verify the correctness of individual components and utility functions, and build verification to confirm that the application bundles correctly for the target environments.
+
+The CI pipeline is configured to run on GitHub Actions or a similar CI platform, with workflow definitions stored in the repository as code. This infrastructure-as-code approach ensures that CI configuration changes are version controlled, reviewed, and auditable in the same way as application code. Pipeline configurations define the specific steps, tools, and resource requirements for each workflow, ensuring reproducibility and consistency across all triggered pipeline runs.
+
+Upon successful merging of a pull request to the development branch, the CD pipeline automatically triggers deployment to the staging environment. The staging environment is a production-representative deployment of all platform components where integration testing and quality assurance validation can be performed before releasing to production. The deployment pipeline packages the application bundle, updates the relevant cloud infrastructure components, and runs deployment-time health checks to verify that the deployment was successful.
+
+Promotion from staging to production requires explicit approval from authorized team members, providing a human checkpoint that allows the team to coordinate production releases with banking partner operational schedules, planned maintenance windows, or other relevant timing considerations. Once approved, the production deployment pipeline executes the same deployment procedures as staging, with additional monitoring and alerting configured to detect any anomalies in application behavior following the release.
+
+\subsection{Testing Infrastructure}
+
+The testing infrastructure at Hyperface is layered across multiple testing levels that collectively provide confidence in the correctness and reliability of the software. Unit tests are written using Jest and React Testing Library, and verify the behavior of individual components, utility functions, and Redux reducers in isolation. The React Testing Library approach encourages tests that reflect how users interact with the application, testing components through their rendered output and user interaction events rather than their internal implementation details.
+
+Integration tests verify that groups of components work correctly together and that the application correctly handles API interactions. These tests may use mock service workers to intercept and simulate API responses, enabling comprehensive testing of the application's behavior across a wide range of API response scenarios including error cases and edge conditions.
+
+End-to-end tests, implemented using Playwright or Cypress, automate full user journey tests through the deployed application in a browser environment. These tests verify critical user workflows such as card blocking, EMI activation, and customer care request submission from start to finish, providing assurance that the most important user journeys continue to work correctly across application releases. End-to-end tests are run as part of the CI/CD pipeline before production releases and are also scheduled to run regularly against the production environment as synthetic monitoring tests.
+
+\subsection{Monitoring and Observability}
+
+Once applications are deployed to production, the monitoring and observability infrastructure provides visibility into application performance, error rates, and user experience quality. Application performance monitoring tools capture real user metrics including page load times, JavaScript bundle execution times, API call latencies, and user interaction timings, enabling the team to identify performance regressions and optimize the most impactful user experience bottlenecks.
+
+Error monitoring tools capture and aggregate JavaScript exceptions that occur in the production application, providing developers with detailed error reports including stack traces, browser environment information, and the user actions that preceded the error. Automatic alerting is configured for error rate thresholds that indicate significant regressions in application stability, enabling rapid response to issues that affect production users.
+
+Backend service monitoring tracks API response times, error rates, and throughput for all services consumed by the CBCC-PWA. Dashboard views aggregate metrics across all services into a comprehensive operational picture that allows the team to quickly identify the source of user-impacting issues. Log aggregation systems collect structured log output from all application components, enabling detailed investigation of specific incidents through log search and filtering.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Workflow and Methodologies}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The OMS team at Hyperface follows an Agile-based workflow for managing product development and operational activities. Work is generally organized into short development sprints where product requirements, feature updates, bug fixes, and operational improvements are planned and executed collaboratively. Daily stand-up meetings, sprint planning sessions, and review discussions are conducted to track progress and coordinate between product, engineering, and operations teams.
+\subsection{Agile Development Process}
 
-The department follows a simplified Software Development Life Cycle (SDLC) consisting of requirement gathering, feature planning, development, testing, deployment, and monitoring stages. Tasks and issues are managed using internal tracking tools and collaboration platforms. Since Hyperface operates as a fast-paced startup, the workflow is flexible and adaptive, allowing teams to quickly respond to changing business requirements, client feedback, and operational needs while maintaining product quality and system reliability.
+The OMS team follows an Agile Scrum methodology for managing its development activities, with two-week sprints forming the primary unit of planning and delivery. The sprint cycle begins with a sprint planning meeting in which the team reviews the product backlog, evaluates the priority and readiness of candidate items for inclusion in the sprint, and establishes the sprint goal that represents the primary objective the team aims to achieve by the end of the sprint.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% NOTE: This section is meant to teach how to use "Acronyms" and "Glossaries" in the report. 
-% 		So Remove or comment the following section and it's content entirely.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+During sprint planning, each backlog item is estimated using story points or T-shirt sizing to provide a relative measure of effort and complexity. The team's historical velocity, measured as the average number of story points completed per sprint, informs how many items can realistically be committed to a given sprint. This capacity-based planning approach helps the team make commitments that are ambitious but achievable, avoiding the morale-damaging pattern of consistently overcommitting and failing to complete sprint goals.
+
+Daily stand-up meetings are conducted each morning, with each team member providing a brief update on what they accomplished since the previous stand-up, what they plan to work on today, and whether any blockers are impeding their progress. These meetings are intentionally brief, serving to keep the team synchronized without consuming significant time that could be used for productive work. Issues surfaced during stand-ups that require extended discussion are taken offline between the relevant parties rather than consuming the whole team's time.
+
+\subsection{Sprint Review and Retrospective}
+
+Sprint reviews are held at the end of each sprint to demonstrate completed work to stakeholders and gather feedback. The OMS team's stakeholders include the operations and banking partner management teams whose tools and workflows the team supports, as well as broader engineering and product leadership who maintain oversight of the team's deliverables. Demonstrations focus on working software — completed features and improvements deployed to the staging environment — providing concrete evidence of the team's progress.
+
+Feedback gathered during sprint reviews informs the backlog refinement process, where product managers and the team collaboratively update backlog items with new insights, adjust priorities, and add new items based on stakeholder feedback and changing business needs. Regular backlog refinement sessions ensure that the backlog remains organized, well-estimated, and prioritized so that sprint planning meetings are efficient and the team always has a clear pipeline of valuable work to pull from.
+
+Sprint retrospectives follow each sprint review and provide the team with a structured forum for reflecting on the process, collaboration, and tooling of the completed sprint. The retrospective format typically involves team members identifying what went well and should be continued, what did not go well and should be changed, and specific experiments or actions the team wants to try in the next sprint to improve their process. Retrospective action items are tracked and reviewed in subsequent retrospectives to ensure that process improvement intentions are followed through.
+
+\subsection{Task and Issue Management}
+
+Work items, bugs, and requests are tracked using a project management and issue tracking platform that provides visibility into the status of all work across the team. Each item in the tracking system includes a description of the work to be done, relevant context and acceptance criteria, priority indicators, size estimates, and links to related items and documentation. Team members update the status of their assigned items throughout the sprint to provide real-time visibility into progress.
+
+The issue tracking system also serves as the record of decisions and discussions related to specific items. Comments on issues capture questions, design decisions, implementation notes, and feedback from reviewers, providing a searchable history of the context surrounding each piece of work. This record is valuable when investigating issues discovered in production, as the implementation and design decisions that led to the current behavior can often be traced through issue comments and linked pull requests.
+
+A public-facing status page and internal communication channels keep stakeholders informed of significant incidents, planned maintenance, and major releases. When production incidents occur, incident tickets are created in the tracking system with detailed timelines, impact assessments, and root cause analyses documented as the incident progresses and is resolved. Post-incident review reports are shared with relevant stakeholders to communicate transparency about what happened and what steps are being taken to prevent recurrence.
+
+\subsection{Documentation Practices}
+
+The OMS team places high value on documentation as a mechanism for knowledge sharing, onboarding, and operational reference. Product documentation covering the purpose, design decisions, and usage instructions for internal tools is maintained in a centralized wiki. Technical documentation, including API specifications, data model descriptions, and deployment runbooks, is maintained in the code repositories and kept up to date as part of the development workflow.
+
+New features and significant changes to existing tools are accompanied by documentation updates that describe the new or changed behavior, any configuration or operational requirements, and any implications for users of the internal tools. Documentation reviews are included in the definition of done for development tasks, ensuring that documentation is treated as a first-class output of the development process rather than an afterthought.
+
+The onboarding documentation maintained by the team was particularly valuable during the internship, providing a structured path through the codebase, development environment setup, and team processes that enabled productive contribution within the first week. The intern also contributed to documentation improvements during the internship, reflecting the team's expectation that all team members — including interns — contribute to maintaining and improving the collective knowledge base.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Team Collaboration and Communication}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Collaboration with Engineering Teams}
+
+The OMS team works closely with multiple other engineering teams within Hyperface, particularly the teams responsible for the Credit Pro, Smart Engage, and Onboard IQ platforms. Since many of the internal operational tools built by the OMS team consume APIs and data from these platforms, close collaboration is essential to coordinate API design, data model decisions, and release schedules that affect the internal tools' functionality.
+
+Collaboration with other engineering teams typically involves participation in cross-team architecture discussions, shared API contract reviews, and coordination of deployment schedules to ensure that dependent changes are released in the correct sequence. The team maintains a set of integration test environments that allow the OMS team to validate that changes in upstream platform services do not break the internal tools before those changes reach production.
+
+Regular engineering sync meetings, attended by representatives from multiple teams, provide a forum for sharing technical decisions, raising integration concerns, and staying informed about significant architectural changes that may affect the OMS team's work. These cross-team communication forums are an important part of Hyperface's approach to maintaining coherence across a distributed microservices architecture where multiple teams are making independent changes to interconnected systems.
+
+\subsection{Collaboration with Operations and Business Teams}
+
+The OMS team's most frequent collaboration partners outside of engineering are the operations teams who use the internal tools the team builds. Regular working sessions with operations team representatives are conducted to gather requirements for new features, review designs for upcoming tools and workflows, and collect feedback on recently released improvements.
+
+These working sessions are invaluable for ensuring that the tools built by the OMS team are genuinely useful for the operational contexts in which they are used. Operations staff often have insights about workflow edge cases, data interpretation ambiguities, and usability challenges that are not obvious from a purely technical perspective and that significantly affect how useful a tool is in practice. The close collaboration between OMS engineers and operations stakeholders enables the team to design tools that work well in real operational contexts rather than just satisfying theoretical requirements.
+
+\subsection{Communication Tools and Practices}
+
+Day-to-day communication within the team and across the broader organization is conducted through a combination of synchronous and asynchronous channels. Team messaging platforms are used for quick questions, informal discussions, and sharing of links and updates that do not require a formal meeting. Dedicated channels are maintained for different topics, including team-specific announcements, technical discussions, incident management, and social interaction, making it straightforward to direct communication to the right audience.
+
+Video conferencing tools are used for sprint ceremonies, design reviews, cross-team sync meetings, and one-on-one sessions between engineers and their managers. Recording of key meetings ensures that team members who are unable to attend synchronously can review the discussion and decisions made. Meeting notes and action items are shared after key meetings to ensure that all relevant parties are informed and that commitments made in meetings are tracked.
+
+Email is used primarily for formal communications with banking partners, compliance-related matters, and official correspondence that benefits from a more structured and archivable format. The team maintains clear norms around which communication channels are appropriate for which types of communication, reducing the cognitive overhead of managing multiple channels simultaneously.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Internship Activities and Daily Routine}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Onboarding Phase}
+
+The internship commenced with a structured onboarding phase designed to familiarize the intern with Hyperface's products, engineering practices, codebase, and team culture. During the first week, orientation sessions introduced the company's business model, product portfolio, organizational structure, and the specific mandate of the OMS team. These sessions were supplemented by self-directed reading of technical documentation covering the CBCC-PWA architecture, the Credit Pro platform's core concepts, and the team's development standards.
+
+The development environment setup process involved configuring the local machine with all the required tools, dependencies, and access credentials needed to run the CBCC-PWA locally. Step-by-step setup documentation maintained by the team guided this process, and a senior engineer was available to assist with any setup issues encountered. By the end of the first week, the intern had a fully functional local development environment and had successfully run the application locally with a mock backend.
+
+The second week of onboarding involved exploring the codebase systematically, reading the code for the major application modules, reviewing the test suite, and tracing the data flow through the Redux store and API integration layer. Code reading is a critical skill for contributing effectively to a large, existing codebase, and this initial investment in understanding the code's structure paid dividends throughout the rest of the internship. Discussions with senior engineers during code reading helped clarify design decisions and architectural patterns that were not immediately obvious from the code alone.
+
+\subsection{Day-to-Day Activities}
+
+The daily routine during the internship was structured around the team's sprint cycle and Agile practices. Each working day began with the team's morning stand-up, at which the intern participated alongside full-time team members, reporting on progress and any blockers encountered. Active participation in stand-ups from the first week reinforced the intern's sense of being a genuine team member rather than a peripheral observer.
+
+Following the stand-up, the majority of each working day was spent on the assigned development tasks, which typically involved implementing UI components, integrating API endpoints, writing or updating tests, addressing code review feedback, or documenting completed work. Deep work on implementation tasks was conducted in the local development environment, with frequent testing in the browser to verify behavior and appearance. When implementation questions arose, senior engineers were consulted through the team messaging platform or brief video calls, maintaining productivity without requiring formal meeting overhead.
+
+Code review participation was an important part of the daily routine. In addition to submitting the intern's own work for review, reviewing pull requests submitted by other team members provided exposure to parts of the codebase not directly worked on and reinforced understanding of the team's coding standards through seeing how experienced engineers applied them in practice. The feedback received on the intern's own pull requests was a primary mechanism for skill development during the internship.
+
+\subsection{Learning and Development Activities}
+
+Alongside the core development work, the internship included several structured learning and development activities. Weekly one-on-one meetings with a designated engineering mentor provided a forum for discussing technical questions, career guidance, and feedback on the intern's contributions. These sessions were highly valuable for addressing conceptual gaps in understanding, getting context on why specific technical decisions had been made, and receiving guidance on how to develop professional skills alongside technical capabilities.
+
+Participation in the team's regular internal tech talks provided exposure to technical topics being worked on across the broader engineering organization, not just within the OMS team. Topics covered during these sessions included deep dives into specific technical challenges recently solved by other teams, introductions to new technologies being evaluated for adoption, and discussions of industry trends in fintech and frontend engineering. These sessions broadened the intern's awareness of the technical landscape beyond the immediate scope of the assigned work.
+
+The intern also participated in architecture discussions and design reviews for upcoming features, even in cases where the implementation would be undertaken by more senior engineers. Early participation in these higher-level discussions helped develop the habit of thinking about technical design at the architecture level rather than only at the implementation level, which is an important aspect of professional growth for engineers at all levels.
+
+This chapter has provided a comprehensive account of the OMS department's structure, objectives, technical infrastructure, workflows, and collaborative practices at Hyperface, as well as a detailed description of the day-to-day activities of the internship. The environment described in this chapter formed the operational context within which the specific tasks described in Chapter 3 were undertaken. Chapter 3 provides a detailed account of the technical work performed during the internship, including the implementation of frontend features, secure workflows, and UI enhancements for the CBCC-PWA platform.
